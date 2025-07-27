@@ -1,0 +1,127 @@
+@if(errorMessage){
+  <div
+    class="flex flex-col items-center justify-center text-center text-red-600 border-red-300 rounded-xl p-6 shadow-md min-h-screen">
+    <i class="fa-solid fa-circle-exclamation text-4xl mb-3 text-red-500"></i>
+    <p class="text-lg font-semibold">Oops! Something went wrong.</p>
+    <p class="text-sm text-gray-600 mt-2">{{ errorMessage }}</p>
+    <button (click)="getProducts()"
+      class="mt-4 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+      Retry
+    </button>
+  </div>
+} @else {
+  @if(isLoading){
+    <app-loading></app-loading>
+  } @else {
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-10">
+      <!-- Filters Section -->
+      <div
+        class="mb-12 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 relative overflow-hidden">
+        <div
+          class="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent">
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-6">
+          <!-- Search -->
+          <div class="flex-1 relative">
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-lg"></i>
+            <input type="text" placeholder="Search for amazing products..." [(ngModel)]="search" (input)="onSearch()"
+              class="w-full pl-14 pr-4 py-5 bg-white/50 dark:bg-gray-800/50 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-lg font-medium">
+          </div>
+
+          <!-- Sort -->
+          <div class="relative min-w-[280px]">
+            <i
+              class="fa-solid fa-sort absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-lg"></i>
+            <select
+              class="w-full pl-14 pr-6 py-5 bg-white/50 dark:bg-gray-800/50 border-2 border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white text-lg font-medium appearance-none"
+              (change)="sortProducts(getNameOption($event))">
+              <option value="a-z">Name: A-Z</option>
+              <option value="z-a">Name: Z-A</option>
+              <option value="asc">Price: Low to High</option>
+              <option value="desc">Price: High to Low</option>
+            </select>
+            <i
+              class="fa-solid fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Section -->
+      @if(products.length > 0) {
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+          @for (product of products; track $index) {
+            <div class="group relative">
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-xl group-hover:blur-2xl opacity-0 group-hover:opacity-100 transition">
+              </div>
+              <div
+                class="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden transform transition hover:-translate-y-4 hover:shadow-2xl">
+                <!-- Image -->
+                <div class="relative">
+                  <img [src]="product.image" [alt]="product.title"
+                    class="aspect-square p-6 object-cover h-64 w-full dark:from-gray-800 dark:to-gray-700 transition group-hover:scale-110 duration-700">
+
+                  <!-- Actions -->
+                  <div
+                    class="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition">
+                    <button
+                      class="p-3 bg-white dark:bg-gray-800 text-blue-500 rounded-full shadow-lg hover:scale-110 transition">
+                      <i class="fa-solid fa-eye" (click)="goToDetails(product.id)"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Title -->
+                <div class="p-6">
+                  <h3
+                    class="text-lg font-bold text-gray-800 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
+                    {{ product.title | slice: ' ':0:2:' ' }}
+                  </h3>
+
+                  <div class="flex gap-3">
+                    <button
+                      class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-3 rounded-xl transition font-semibold hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2"
+                      (click)="goToDetails(product.id)">
+                      <i class="fa-solid fa-eye"></i> View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <!-- Empty Centered -->
+        <div class="w-full min-h-[60vh] flex items-center justify-center">
+          <div class="text-center max-w-3xl mx-auto px-6">
+            <!-- Icon -->
+            <div class="mb-8">
+              <div
+                class="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-br from-red-500 to-pink-600 rounded-full pulse-glow">
+                <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Title -->
+            <h1
+              class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-pink-500 to-purple-600 mb-4">
+              Product Not Found
+            </h1>
+
+            <!-- Description -->
+            <p class="text-gray-700 dark:text-gray-300 text-lg">
+              Oops! The product you're looking for seems to have vanished into the digital void.<br>
+              But don't worry – we've got plenty of other amazing things to discover!
+            </p>
+          </div>
+        </div>
+      }
+    </main>
+  }
+}

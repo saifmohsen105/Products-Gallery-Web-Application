@@ -1,0 +1,43 @@
+<!-- Header -->
+<nav
+  class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border-b border-white/20 dark:border-gray-700/50 sticky top-0 z-40">
+  <div
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
+
+    <!-- Logo & Title -->
+    <div class="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
+      <!-- Logo -->
+      <div class="relative">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur animate-glow">
+        </div>
+        <div class="relative p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl">
+          <i class="fa-solid fa-store text-white text-xl sm:text-2xl"></i>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="text-center sm:text-left">
+        <h1
+          class="text-2xl sm:text-3xl md:text-4xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          Modern Gallery
+        </h1>
+        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">
+          Discover Premium Products
+        </p>
+      </div>
+    </div>
+
+    <!-- Dark Mode Button -->
+    <div class="flex justify-center sm:justify-end">
+      <button id="darkToggle" #darkToggle (click)="toggleDark()"
+        class="p-3 sm:p-4 bg-white/50 dark:bg-gray-800/50 rounded-2xl border hover:bg-white/70 dark:hover:bg-gray-800/70 transition hover:scale-105 hover:shadow-xl">
+        @if (isToggle) {
+        <i class="fa-solid fa-sun text-yellow-300 text-lg sm:text-xl"></i>
+        } @else {
+        <i class="fa-solid fa-moon text-white text-lg sm:text-xl"></i>
+        }
+      </button>
+    </div>
+
+  </div>
+</nav>

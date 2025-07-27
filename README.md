@@ -8,13 +8,12 @@ Users can explore premium products with category filters, light/dark mode toggle
 Modern Gallery is an e-commerce-style product gallery featuring:
 
 - 🌓 Dark Mode toggle
-- 
 - 🔍 Search functionality
 - 🖼️ Product details with image sliders
 
 ## 🚀 Live Demo
 
-[🔗 Click here to view live](https://your-deployment-link.web.app)
+[🔗 Click here to view live](https://products-gallery-web-application-pi.vercel.app/)
 
 ## 🧱 Tech Stack Used
 
